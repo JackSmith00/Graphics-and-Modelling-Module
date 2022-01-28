@@ -1,4 +1,0 @@
-INDEX VERSION 1.131+/Users/Jack/Documents/UNI/Graphics & Modelling/CIS2160/.metadata/.plugins/org.eclipse.jdt.core
-2888586291.index
-1865797976.index
-483243433.index
