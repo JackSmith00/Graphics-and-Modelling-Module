@@ -5,6 +5,7 @@ public class PortTask1FirstDraft {
 		exercise2();
 	}
 	
+	@SuppressWarnings("unused")
 	private static void example(){
         System.out.println("Graphics class bitchez...");
         
@@ -20,7 +21,8 @@ public class PortTask1FirstDraft {
         StdDraw.text(0.5, 0.5, "First 2D program");
     }
     
-    private static void exercise1() {
+    @SuppressWarnings("unused")
+	private static void exercise1() {
         StdDraw.line(0, 0.9, 0.1, 1);
         StdDraw.rectangle(0.2, 0.8, 0.2, 0.1);
         StdDraw.ellipse(0.2, 0.6, 0.2, 0.1);
@@ -30,13 +32,13 @@ public class PortTask1FirstDraft {
     
     private static void exercise2() {
         // H
-        StdDraw.line(0.1, 0.9, 0.1, 0.7);
-        StdDraw.line(0.1, 0.8, 0.2, 0.8);
-        StdDraw.line(0.2, 0.9, 0.2, 0.7);
+        StdDraw.line(0.1, 0.9, 0.1, 0.7); // left line
+        StdDraw.line(0.1, 0.8, 0.2, 0.8); // joining line
+        StdDraw.line(0.2, 0.9, 0.2, 0.7); // right line
         
         // e
-        StdDraw.arc(0.3, 0.75, 0.05, 0, 300);
-        StdDraw.line(0.25, 0.75, 0.35, 0.75);
+        StdDraw.arc(0.3, 0.75, 0.05, 0, 300); // curved line
+        StdDraw.line(0.25, 0.75, 0.35, 0.75); // joining across line
         
         // l
         drawL(0.4, 0.9);

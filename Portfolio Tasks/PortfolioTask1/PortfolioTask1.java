@@ -1,16 +1,36 @@
-
+/**
+ * Class to address all exercises for Portfolio Task 1
+ * 
+ * last updated: 1/2/22
+ * 
+ * @author Jack Smith - 24265241
+ *
+ */
 public class PortfolioTask1 {
 
 	public static void main(String[] args) {
-		exercise3();
+		exercise2(); // can be replaced with `exercise2` or `exercise3` to see the corresponding output
 	}
     
+	/**
+	 * Demonstrates different lines that can be drawn using StdDraw.
+	 * This includes a line, rectangle, ellipse, circle and arc.
+	 */
     public static void exercise1() {
-        StdDraw.line(0, 0.9, 0.2, 1); // draw a line across the top left corner
-        StdDraw.rectangle(0.2, 0.8, 0.2, 0.1); // draw a rectangle under the line in the top left
-        StdDraw.ellipse(0.2, 0.6, 0.2, 0.1); // draw an eclipse under the rectangle
-        StdDraw.circle(0.2, 0.4, 0.1); // draw a circle under the eclipse
-        StdDraw.arc(0.2, 0, 0.2, 0, 160); // draw an arch from the bottom of the pane
+    	
+    	// shapes
+        StdDraw.line(0.1, 0.85, 0.5, 0.95); // draw a line in towards the top left of the frame
+        StdDraw.rectangle(0.3, 0.75, 0.2, 0.05); // draw a rectangle under the line in the top left
+        StdDraw.ellipse(0.3, 0.55, 0.2, 0.1); // draw an ellipse under the rectangle
+        StdDraw.circle(0.3, 0.3, 0.1); // draw a circle under the ellipse
+        StdDraw.arc(0.3, -0.05, 0.2, 40, 140); // draw an arch from the bottom of the pane
+        
+        // labels
+        StdDraw.text(0.61, 0.9, "line"); // label for line
+        StdDraw.text(0.65, 0.75, "rectangle"); // label for rectangle
+        StdDraw.text(0.63, 0.55, "ellipse"); // label for ellipse
+        StdDraw.text(0.62, 0.3, "circle"); // label for circle
+        StdDraw.text(0.61, 0.1, "arc"); // label for arc
     }
     
     /**
@@ -36,6 +56,9 @@ public class PortfolioTask1 {
         
     }
     
+    /**
+     * Draws a 2D picture involving a couple of cars on a road
+     */
     public static void exercise3() {
     	
     	// cars
@@ -54,7 +77,7 @@ public class PortfolioTask1 {
     	
     	// sun
     	StdDraw.circle(0.15, 0.9, 0.08);
-    	// rays
+    	// sun rays
     	StdDraw.line(0.24, 0.95, 0.26, 0.964);
     	StdDraw.line(0.25, 0.9, 0.28, 0.9);
     	StdDraw.line(0.24, 0.85, 0.26, 0.836);
@@ -217,7 +240,7 @@ public class PortfolioTask1 {
     }
     
     /**
-     * Used to draw a 3D perspective car shape
+     * Used to draw a 3D perspective car shape in 2D
      * @param x the left-most x-coord to draw from
      * @param y the top (highest) y-coord to draw from
      */
