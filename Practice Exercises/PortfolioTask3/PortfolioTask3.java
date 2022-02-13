@@ -1,3 +1,5 @@
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,9 +14,7 @@ import java.util.Random;
 public class PortfolioTask3 {
 
 	public static void main(String[] args) {
-		StdDraw.setCanvasSize(700, 700);
-		StdDraw.setScale(-50, 450);
-		exercise3();
+		exercise4();
 	}
 	
 	/**
@@ -61,27 +61,68 @@ public class PortfolioTask3 {
 		}
 	}
 	
+	/**
+	 * Draws grids for exercise 1
+	 */
 	public static void exercise1() {
-		redBlackGrid(8, 5, -2, 0);
+		// Set up canvas
+		StdDraw.setCanvasSize(1000, 400);
+		StdDraw.setScale(-50, 450);
+		StdDraw.setYscale(-40, 160);
+		
+		redBlackGrid(5, 100, 0, 0); // 5x5 grid
+		redBlackGrid(8, 100, 150, 0); // 8x8 grid
+		redBlackGrid(25, 100, 300, 0); //25x25 grid
+		
+		// label grids
+		StdDraw.setPenColor(StdDraw.BLACK); // reset pen colour to black
+		StdDraw.text(50, 110, "N = 5"); 
+		StdDraw.text(200, 110, "N = 8");
+		StdDraw.text(350, 110, "N = 25");
 	}
 	
+	/**
+	 * Draws a circle of n evenly spaced points
+	 * 
+	 * @param n number of points to draw on the circle
+	 * @param radius radius of the overall circle
+	 * @param dotRadius radius of each dot that make up the circle
+	 * @param x0 centre x-coordinate of the circle
+	 * @param y0 centre-y coordinate of the circle
+	 */
 	private static void dottedCircle(int n, float radius, float dotRadius, float x0, float y0) {
 		
-		double angleBetweenPoints = (2 * Math.PI) / n;
+		double angleBetweenPoints = (2 * Math.PI) / n; // angle between any 2 consecutive points
 		
-		int x;
-		int y;
+		/*
+		 * Below will be used in the algorithm, it is declared here
+		 * to save on object creation overhead within the algorithm
+		 */
+		int x, y;
 		
-		for(int i = 1; i <= n; i++) {
+		for(int i = 1; i <= n; i++) { // loop through each dot to draw
 			
+			/*
+			 * Calculate the x and y coordinates 
+			 * of each point using cos and sin with
+			 * the angle between each point
+			 */
 			x = Math.round(x0 + radius * (float) Math.cos(i * angleBetweenPoints));
 			y = Math.round(y0 + radius * (float) Math.sin(i * angleBetweenPoints));
 			
-			StdDraw.filledCircle(x, y, dotRadius);
+			StdDraw.filledCircle(x, y, dotRadius); // draw the current dot
 		}
 	}
 	
+	/**
+	 * Draws the dotted circle specified for exercise 2
+	 */
 	public static void exercise2() {
+		// Set up canvas
+		StdDraw.setCanvasSize(700, 700);
+		StdDraw.setScale(-50, 450);
+		
+		// draw dotted circle
 		dottedCircle(16, 200, 10, 200, 200);
 	}
 	
@@ -120,7 +161,37 @@ public class PortfolioTask3 {
 	}
 	
 	public static void exercise3() {
-		joinedDottedCircle(16, 0.5f, 200, 10, 200, 200);
+		
+		StdDraw.setCanvasSize(1200, 600);
+		StdDraw.setScale(-50, 700);
+		StdDraw.setXscale(-50, 1450);
+		
+		joinedDottedCircle(16, 0.25f, 200, 10, 200, 300);
+		StdDraw.text(200, 550, "p = 0.25");
+		
+		joinedDottedCircle(16, 0.5f, 200, 10, 700, 300);
+		StdDraw.text(700, 550, "p = 0.5");
+		
+		joinedDottedCircle(16, 1.0f, 200, 10, 1200, 300);
+		StdDraw.text(1200, 550, "p = 1.0");
+	}
+	
+	public static void exercise4() {
+		
+		StdDraw.setCanvasSize(700, 700);
+		StdDraw.setScale(0, 500);
+		
+		StdDraw.union(new Rectangle2D.Double(100, 400, 100, 150), new Ellipse2D.Double(70, 430, 100, 100));
+		StdDraw.text(150, 230, "Union");
+
+		StdDraw.difference(new Rectangle2D.Double(130, 150, 100, 150), new Ellipse2D.Double(100, 180, 100, 100));
+		StdDraw.text(150, 50, "Difference");
+		
+		StdDraw.intersection(new Rectangle2D.Double(315, 150, 100, 150), new Ellipse2D.Double(285, 180, 100, 100));
+		StdDraw.text(350, 50, "Intersection");
+		
+		StdDraw.exclusiveOr(new Rectangle2D.Double(300, 400, 100, 150), new Ellipse2D.Double(270, 430, 100, 100));
+		StdDraw.text(350, 230, "ExclusiveOr");
 	}
 	
 }
