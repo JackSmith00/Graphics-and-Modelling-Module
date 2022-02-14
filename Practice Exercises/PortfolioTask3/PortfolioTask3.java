@@ -127,12 +127,23 @@ public class PortfolioTask3 {
 		dottedCircle(16, 200, 10, 200, 200);
 	}
 	
+	/**
+	 * Draws a circle of n evenly spaced points
+	 * and randomly joins points based on the provided
+	 * probability in the range 0-1
+	 *
+	 * @param n number of points to draw on circle
+	 * @param p probability that any line is drawn, between 0 and 1
+	 * @param radius radius of the overall circle
+	 * @param dotRadius radius of each dot that make up the circle
+	 * @param x0 centre x-coordinate of the circle
+	 * @param y0 centre y-coordinate of the circle
+	 */
 	private static void joinedDottedCircle(int n, float p, float radius, float dotRadius, float x0, float y0) {
 		
-		double angleBetweenPoints = (2 * Math.PI) / n;
+		double angleBetweenPoints = (2 * Math.PI) / n; // angle between any 2 consecutive points
 		
-		int x;
-		int y;
+		int x, y;
 		int[] dotToJoinTo;
 		Random randomNumberGenerator = new Random();
 		
