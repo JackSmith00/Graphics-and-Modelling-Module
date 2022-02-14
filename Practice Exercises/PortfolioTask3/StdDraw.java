@@ -41,7 +41,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
@@ -1266,6 +1266,81 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     	offscreen.fill(a1);
     	draw();
     	
+    }
+    
+    private static Area ring(double x, double y, double radius, double ringThickness) {
+    	
+    	Area ring = new Area(new Ellipse2D.Double(scaleX(x - radius), scaleY(y + radius), factorX(2 * radius), factorY(2 * radius)));
+    	Area ringInner = new Area(new Ellipse2D.Double(scaleX(x - radius + ringThickness), scaleY(y + radius - ringThickness), factorX(2 * Math.max(0, radius - ringThickness)), factorY(2 * Math.max(0, radius - ringThickness))));
+    	
+    	ring.subtract(ringInner);
+
+    	return ring;
+    }
+    
+    private static Area halfRing(double x, double y, double radius, double ringThickness, double rotation) {
+    	
+    	Area halfRing = new Area(new Arc2D.Double(scaleX(x - radius), scaleY(y + radius), factorX(2 * radius), factorY(2 * radius), rotation, 180, Arc2D.OPEN));
+    	double innerRotation = rotation > 0 ? rotation - 1 : rotation + 1;
+    	Area ringInner = new Area(new Arc2D.Double(scaleX(x - radius + ringThickness), scaleY(y + radius - ringThickness), factorX(2 * Math.max(0, radius - ringThickness)), factorY(2 * Math.max(0, radius - ringThickness)), innerRotation, 182, Arc2D.OPEN));
+    	
+    	halfRing.subtract(ringInner);
+
+    	return halfRing;
+    }
+    
+    public static Area oneNotchOlympicRing(double x, double y, double radius, double ringThickness, double rotation) {
+    	
+    	double spacing = radius + 2;
+    	
+    	Area ring = ring(x, y, radius, ringThickness); 	
+    	Area halfRing = halfRing(x + spacing, y - spacing, radius, ringThickness, 135);
+    	
+    	ring.subtract(halfRing);
+    	
+    	/*
+    	 * The code below was researched using the following resource:
+    	 * 
+    	 * Oracle, 2020. Class AffineTransform [online]
+    	 * Available from:
+    	 * https://docs.oracle.com/en/java/javase/15/docs/api/java.desktop/java/awt/geom/AffineTransform.html#quadrantapproximation
+    	 * [Accessed 14/02/2022]
+    	 * 
+    	 * The code was not copied verbatim, it was used to find how to
+    	 * rotate areas which was then applied here
+    	 */
+    	AffineTransform transform = new AffineTransform();
+    	transform.rotate(Math.toRadians(rotation), scaleX(x), scaleY(y));
+    	
+    	ring.transform(transform);
+    	
+    	return ring;
+    	
+    }
+    
+    public static Area twoNotchOlympicRing(double x, double y, double radius, double ringThickness, double rotation) {
+    	
+    	double spacing = radius + 2;
+    	
+    	Area ring = oneNotchOlympicRing(x, y, radius, ringThickness, 0);
+    	AffineTransform transform = new AffineTransform();
+    	transform.rotate(Math.toRadians(-90), scaleX(x), scaleY(y));
+    	ring.transform(transform);
+    	
+    	Area previousRing = oneNotchOlympicRing(x - spacing, y + spacing, radius, ringThickness, 0);
+    	
+    	ring.subtract(previousRing);
+    	
+    	transform.rotate(Math.toRadians(rotation + 90), scaleX(x), scaleY(y));
+    	
+    	ring.transform(transform);
+ 
+    	return ring;
+    }
+    
+    public static void drawArea(Area area) {
+    	offscreen.fill(area);
+    	draw();
     }
     
     /***************************************************************************

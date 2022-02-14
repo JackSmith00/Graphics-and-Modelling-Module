@@ -1,3 +1,4 @@
+import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Random;
 public class PortfolioTask3 {
 
 	public static void main(String[] args) {
-		exercise4();
+		exercise5();
 	}
 	
 	/**
@@ -192,6 +193,34 @@ public class PortfolioTask3 {
 		
 		StdDraw.exclusiveOr(new Rectangle2D.Double(300, 400, 100, 150), new Ellipse2D.Double(270, 430, 100, 100));
 		StdDraw.text(350, 230, "ExclusiveOr");
+	}
+	
+	private static void olympicRings(double x, double y, double ringRadius, double ringThickness) {
+		
+		Area blueRing = StdDraw.oneNotchOlympicRing(x - 2 * (ringRadius + 2), y + ringRadius / 2 + 1, ringRadius, ringThickness, 0);
+		Area yellowRing = StdDraw.twoNotchOlympicRing(x - 1 * (ringRadius + 2), y - ringRadius / 2 - 1, ringRadius, ringThickness, 0);
+		Area blackRing = StdDraw.twoNotchOlympicRing(x - 0 * (ringRadius + 2), y + ringRadius / 2 + 1, ringRadius, ringThickness, 180);
+		Area greenRing = StdDraw.twoNotchOlympicRing(x + 1 * (ringRadius + 2), y - ringRadius / 2 - 1, ringRadius, ringThickness, 0);
+		Area redRing = StdDraw.oneNotchOlympicRing(x + 2 * (ringRadius + 2), y + ringRadius / 2 + 1, ringRadius, ringThickness, 90);
+		
+		StdDraw.setPenColor(StdDraw.BLUE);
+		StdDraw.drawArea(blueRing);
+		StdDraw.setPenColor(StdDraw.YELLOW);
+		StdDraw.drawArea(yellowRing);
+		StdDraw.setPenColor(StdDraw.BLACK);
+		StdDraw.drawArea(blackRing);
+		StdDraw.setPenColor(StdDraw.GREEN);
+		StdDraw.drawArea(greenRing);
+		StdDraw.setPenColor(StdDraw.RED);
+		StdDraw.drawArea(redRing);
+	}
+	
+	public static void exercise5() {
+		StdDraw.setCanvasSize(1050, 700);
+		StdDraw.setScale(0, 200);
+		StdDraw.setXscale(0, 300);
+		
+		olympicRings(150, 100, 40, 8);
 	}
 	
 }
