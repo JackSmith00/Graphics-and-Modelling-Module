@@ -8,7 +8,7 @@
 	<classpathentry kind="src" path="PortfolioTask1"/>
 	<classpathentry kind="src" path="PortfolioTask2"/>
 	<classpathentry kind="src" path="PortfolioTask3"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/CIS2160-StdDraw.jar"/>
+	<classpathentry kind="src" path="StdDraw"/>
 	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/gluegen-rt-natives-linux-amd64.jar"/>
 	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/gluegen-rt-natives-linux-i586.jar"/>
 	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/gluegen-rt-natives-macosx-universal.jar"/>

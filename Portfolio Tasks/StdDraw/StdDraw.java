@@ -30,7 +30,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MediaTracker;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 
@@ -681,7 +680,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     }
 
     // create the menu bar (changed to private)
-    private static JMenuBar createMenuBar() {
+    @SuppressWarnings("deprecation")
+	private static JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("File");
         menuBar.add(menu);
@@ -1216,79 +1216,184 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      *  Custom methods.
      ***************************************************************************/
     
+    /**
+     * Creates and draws a union shape from 2 given shapes.
+     * This is a joining of the two shapes.
+     * 
+     * @param shape1 first shape in the union
+     * @param shape2 second shape in the union
+     */
     public static void union(RectangularShape shape1, RectangularShape shape2) {
     	
+    	/*
+    	 * resize given shapes to match with the sizing and
+    	 * positioning of the StdDraw frame
+    	 */
     	shape1.setFrame(scaleX(shape1.getMinX()), scaleY(shape1.getMinY()), factorX(shape1.getWidth()), factorY(shape1.getHeight()));
     	shape2.setFrame(scaleX(shape2.getMinX()), scaleY(shape2.getMinY()), factorX(shape2.getWidth()), factorY(shape2.getHeight()));
     	
+    	// create an area for each of the shapes
     	Area a1 = new Area(shape1);
     	Area a2 = new Area (shape2);
+    	
+    	// add shape 2 area to shape 1 area
     	a1.add(a2);
-    	offscreen.fill(a1);
-    	draw();
+
+    	// draw the filled area
+    	drawArea(a1);
     	
     }
     
+    /**
+     * Creates and draws a difference shape from 2 given shapes.
+     * This is where the area of the second shape is removed from
+     * the area of the first.
+     * 
+     * @param shape1 the visible shape
+     * @param shape2 the shape to be removed
+     */
     public static void difference(RectangularShape shape1, RectangularShape shape2) {
     	
+    	/*
+    	 * resize given shapes to match with the sizing and
+    	 * positioning of the StdDraw frame
+    	 */
     	shape1.setFrame(scaleX(shape1.getMinX()), scaleY(shape1.getMinY()), factorX(shape1.getWidth()), factorY(shape1.getHeight()));
     	shape2.setFrame(scaleX(shape2.getMinX()), scaleY(shape2.getMinY()), factorX(shape2.getWidth()), factorY(shape2.getHeight()));
     	
+    	// create an area for each of the shapes
     	Area a1 = new Area(shape1);
     	Area a2 = new Area (shape2);
-    	a2.subtract(a1);
-    	offscreen.fill(a2);
-    	draw();
+    	
+    	// remove the area of shape 2 from the area of shape 1
+    	a1.subtract(a2);
+    	
+    	// draw the filled area
+    	drawArea(a1);
     	
     }
     
+    /**
+     * Creates and draws an intersection shape from 2 given shapes.
+     * This is where only the area that is in both shapes is drawn.
+     * 
+     * @param shape1 first shape in the intersection
+     * @param shape2 second shape in the intersection
+     */
     public static void intersection(RectangularShape shape1, RectangularShape shape2) {
     	
+    	/*
+    	 * resize given shapes to match with the sizing and
+    	 * positioning of the StdDraw frame
+    	 */
     	shape1.setFrame(scaleX(shape1.getMinX()), scaleY(shape1.getMinY()), factorX(shape1.getWidth()), factorY(shape1.getHeight()));
     	shape2.setFrame(scaleX(shape2.getMinX()), scaleY(shape2.getMinY()), factorX(shape2.getWidth()), factorY(shape2.getHeight()));
-    	
+	
+    	// create an area for each of the shapes
     	Area a1 = new Area(shape1);
     	Area a2 = new Area (shape2);
+    	
+    	// change a1 to only hold the intersection of a1 and a2
     	a1.intersect(a2);
-    	offscreen.fill(a1);
-    	draw();
+    	
+    	// draw the filled area
+    	drawArea(a1);
     	
     }
     
+    /**
+     * Creates and draws an exclusive or shape from 2 given shapes.
+     * This is where only area that is in either shape1 or shape2
+     * is drawn, but not area that is in both shapes.
+     * 
+     * @param shape1 first shape in the exclusive or
+     * @param shape2 second shape in the exclusive or
+     */
     public static void exclusiveOr(RectangularShape shape1, RectangularShape shape2) {
     	
+    	/*
+    	 * resize given shapes to match with the sizing and
+    	 * positioning of the StdDraw frame
+    	 */
     	shape1.setFrame(scaleX(shape1.getMinX()), scaleY(shape1.getMinY()), factorX(shape1.getWidth()), factorY(shape1.getHeight()));
     	shape2.setFrame(scaleX(shape2.getMinX()), scaleY(shape2.getMinY()), factorX(shape2.getWidth()), factorY(shape2.getHeight()));
     	
+    	// create an area for each of the shapes
     	Area a1 = new Area(shape1);
     	Area a2 = new Area (shape2);
+    	
+    	// add area from shape 2 and remove area that belongs to both a1 and a2
     	a1.exclusiveOr(a2);
-    	offscreen.fill(a1);
-    	draw();
+    	
+    	// draw the filled area
+    	drawArea(a1);
     	
     }
     
+    /**
+     * Creates an area object of a ring
+     * 
+     * @param x the centre x-coordinate of the ring
+     * @param y the centre y-coordinate of the ring
+     * @param radius the radius of the ring
+     * @param ringThickness the thickness of the ring
+     * @return an area object of the created ring
+     */
     private static Area ring(double x, double y, double radius, double ringThickness) {
     	
+    	// area of the ring circle
     	Area ring = new Area(new Ellipse2D.Double(scaleX(x - radius), scaleY(y + radius), factorX(2 * radius), factorY(2 * radius)));
+    	// area of the circle in the centre of the ring (the hole)
     	Area ringInner = new Area(new Ellipse2D.Double(scaleX(x - radius + ringThickness), scaleY(y + radius - ringThickness), factorX(2 * Math.max(0, radius - ringThickness)), factorY(2 * Math.max(0, radius - ringThickness))));
     	
+    	// remove the centre from the ring
     	ring.subtract(ringInner);
 
     	return ring;
     }
     
+    /**
+     * Creates an area object of half of a ring.
+     * To be used to create olympic ring areas.
+     * 
+     * @param x the centre x-coordinate of the ring
+     * @param y the centre y-coordinate of the ring
+     * @param radius the radius of the ring
+     * @param ringThickness the thickness of the ring
+     * @param rotation the rotation of the half ring
+     * @return an area object of the created half ring
+     */
     private static Area halfRing(double x, double y, double radius, double ringThickness, double rotation) {
     	
+    	// area of the half ring
     	Area halfRing = new Area(new Arc2D.Double(scaleX(x - radius), scaleY(y + radius), factorX(2 * radius), factorY(2 * radius), rotation, 180, Arc2D.OPEN));
+    	/*
+    	 * need to handle negative and positive roation values differently,
+    	 * moving either closer to 0. This is so there is no line created
+    	 * from either side of the half ring, as this ring inner is larger
+    	 * and will be removed
+    	 */
     	double innerRotation = rotation > 0 ? rotation - 1 : rotation + 1;
+    	// area of the inner ring
     	Area ringInner = new Area(new Arc2D.Double(scaleX(x - radius + ringThickness), scaleY(y + radius - ringThickness), factorX(2 * Math.max(0, radius - ringThickness)), factorY(2 * Math.max(0, radius - ringThickness)), innerRotation, 182, Arc2D.OPEN));
     	
+    	// remove inner from half ring
     	halfRing.subtract(ringInner);
 
     	return halfRing;
     }
     
+    /**
+     * Used to create an area of an olympic ring, with
+     * only 1 notch (gap), i.e., the blue and red rings.
+     * 
+     * @param x the centre x-coordinate of the ring
+     * @param y the centre y-coordinate of the ring
+     * @param radius the radius of the ring
+     * @param ringThickness the thickness of the ring
+     * @param rotation any rotation to be applied to the ring (clockwise)
+     * @return an area object of the specified olympic ring, with one notch removed
+     */
     public static Area oneNotchOlympicRing(double x, double y, double radius, double ringThickness, double rotation) {
     	
     	double spacing = radius + 2;
@@ -1318,6 +1423,17 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     	
     }
     
+    /**
+     * Used to create an area of an olympic ring, with two
+     * notches (gaps), i.e., the yellow, black and green rings.
+     * 
+     * @param x the centre x-coordinate of the ring
+     * @param y the centre y-coordinate of the ring
+     * @param radius the radius of the ring
+     * @param ringThickness the thickness of the ring
+     * @param rotation any rotation to be applied to the ring (clockwise)
+     * @return an area object of the specified olympic ring, with two notches removed
+     */
     public static Area twoNotchOlympicRing(double x, double y, double radius, double ringThickness, double rotation) {
     	
     	double spacing = radius + 2;
@@ -1338,6 +1454,11 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     	return ring;
     }
     
+    /**
+     * Used to draw an area to the canvas
+     * 
+     * @param area the area to draw
+     */
     public static void drawArea(Area area) {
     	offscreen.fill(area);
     	draw();
@@ -1360,9 +1481,15 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      */
     public static void unionRectangleCircle(double rectangleX, double rectangleY, double rectangleWidth, double rectangleHeight, double circleX, double circleY, double circleDiameter) {
     	
+    	// create an area of the rectangle
     	Area a1 = new Area(new Rectangle2D.Double(scaleX(rectangleX), scaleY(rectangleY), factorX(rectangleWidth), factorY(rectangleHeight)));
+    	// create an area of the circle
     	Area a2 = new Area (new Ellipse2D.Double(scaleX(circleX - (circleDiameter / 2)), scaleY(circleY + (circleDiameter / 2)), factorX(circleDiameter), factorY(circleDiameter)));
+    	
+    	// add the circle area to the rectangle
     	a1.add(a2);
+    	
+    	// draw the filled area
     	offscreen.fill(a1);
     	draw();
     	
@@ -1381,9 +1508,15 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      */
     public static void differenceRectangleCircle(double rectangleX, double rectangleY, double rectangleWidth, double rectangleHeight, double circleX, double circleY, double circleDiameter) {
     	
+    	// create an area of the rectangle
     	Area a1 = new Area(new Rectangle2D.Double(scaleX(rectangleX), scaleY(rectangleY), factorX(rectangleWidth), factorY(rectangleHeight)));
+    	// create an area of the circle
     	Area a2 = new Area (new Ellipse2D.Double(scaleX(circleX - (circleDiameter / 2)), scaleY(circleY + (circleDiameter / 2)), factorX(circleDiameter), factorY(circleDiameter)));
+    	
+    	// remove the rectangle area from the circle
     	a2.subtract(a1);
+    	
+    	// draw the filled area
     	offscreen.fill(a2);
     	draw();
     	
@@ -1402,9 +1535,15 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      */
     public static void intersectionRectangleCircle(double rectangleX, double rectangleY, double rectangleWidth, double rectangleHeight, double circleX, double circleY, double circleDiameter) {
     	
+    	// create an area of the rectangle
     	Area a1 = new Area(new Rectangle2D.Double(scaleX(rectangleX), scaleY(rectangleY), factorX(rectangleWidth), factorY(rectangleHeight)));
+    	// create an area of the circle
     	Area a2 = new Area (new Ellipse2D.Double(scaleX(circleX - (circleDiameter / 2)), scaleY(circleY + (circleDiameter / 2)), factorX(circleDiameter), factorY(circleDiameter)));
+    	
+    	// change a1 to only hold the intersection of the rectangle and circle
     	a1.intersect(a2);
+    	
+    	// draw the filled area
     	offscreen.fill(a1);
     	draw();
     	
@@ -1423,9 +1562,15 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      */
     public static void exclusiveOrRectangleCircle(double rectangleX, double rectangleY, double rectangleWidth, double rectangleHeight, double circleX, double circleY, double circleDiameter) {
     	
+    	// create an area of the rectangle
     	Area a1 = new Area(new Rectangle2D.Double(scaleX(rectangleX), scaleY(rectangleY), factorX(rectangleWidth), factorY(rectangleHeight)));
+    	// create an area of the circle
     	Area a2 = new Area (new Ellipse2D.Double(scaleX(circleX - (circleDiameter / 2)), scaleY(circleY + (circleDiameter / 2)), factorX(circleDiameter), factorY(circleDiameter)));
+    	
+    	// add area from the circle and remove area that belongs to both the rectangle and circle
     	a1.exclusiveOr(a2);
+    	
+    	// draw the filled area
     	offscreen.fill(a1);
     	draw();
     	
