@@ -15,7 +15,7 @@ import java.util.Random;
 public class PortfolioTask3 {
 
 	public static void main(String[] args) {
-		exercise4();
+		exercise5(); // can be changed to see each exercise
 	}
 	
 	/**

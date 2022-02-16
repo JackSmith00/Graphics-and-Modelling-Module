@@ -1396,11 +1396,18 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      */
     public static Area oneNotchOlympicRing(double x, double y, double radius, double ringThickness, double rotation) {
     	
+    	// additional spacing between rings
     	double spacing = radius + 2;
     	
+    	// create an area of the whole ring
     	Area ring = ring(x, y, radius, ringThickness); 	
-    	Area halfRing = halfRing(x + spacing, y - spacing, radius, ringThickness, 135);
+    	/* Create an area of half a ring to remove from the olympic ring.
+    	 * This will be slightly bigger than the actual ring to provide
+    	 * the gap as seen in the original.
+    	 */
+    	Area halfRing = halfRing(x + spacing, y - spacing, radius + 2, ringThickness + 4, 135);
     	
+    	// remove half the ring from the olympic ring to create the notch
     	ring.subtract(halfRing);
     	
     	/*
@@ -1415,9 +1422,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     	 * rotate areas which was then applied here
     	 */
     	AffineTransform transform = new AffineTransform();
+    	// create a rotation about the centre of the ring
     	transform.rotate(Math.toRadians(rotation), scaleX(x), scaleY(y));
     	
-    	ring.transform(transform);
+    	ring.transform(transform); // rotate the ring
     	
     	return ring;
     	
@@ -1436,20 +1444,33 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      */
     public static Area twoNotchOlympicRing(double x, double y, double radius, double ringThickness, double rotation) {
     	
+    	// additional spacing between rings
     	double spacing = radius + 2;
     	
+    	// create an olympic ring with one notch as a starting point
     	Area ring = oneNotchOlympicRing(x, y, radius, ringThickness, 0);
+    	// create a transform object to rotate the ring
     	AffineTransform transform = new AffineTransform();
+    	// set the rotation to -90°
     	transform.rotate(Math.toRadians(-90), scaleX(x), scaleY(y));
+    	// apply rotation to the olympic ring
     	ring.transform(transform);
     	
-    	Area previousRing = oneNotchOlympicRing(x - spacing, y + spacing, radius, ringThickness, 0);
+    	/* create an area to represent the previous ring in the logo.
+    	 * This will be slightly bigger than the actual ring to provide
+    	 * the gap as seen in the original.
+    	 */
+    	Area previousRing = oneNotchOlympicRing(x - spacing, y + spacing, radius + 2, ringThickness + 4, 0);
     	
+    	// remove any crossover between the previous ring from the current ring
     	ring.subtract(previousRing);
     	
+    	/*
+    	 * apply given rotation to the ring, adding 90 to compensate for earlier rotation
+    	 */
     	transform.rotate(Math.toRadians(rotation + 90), scaleX(x), scaleY(y));
     	
-    	ring.transform(transform);
+    	ring.transform(transform); // rotate the ring
  
     	return ring;
     }
