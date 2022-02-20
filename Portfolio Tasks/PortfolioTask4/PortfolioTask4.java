@@ -4,7 +4,7 @@ import java.util.Random;
 public class PortfolioTask4 {
 
 	public static void main(String[] args) {
-		exercise2a();
+		exercise2b();
 	}
 	
 	/**
@@ -227,7 +227,147 @@ public class PortfolioTask4 {
 		}
 	}
 	
+	public static void exercise2aColorSwap() {
+		// set up canvas
+		StdDraw.setScale(-1, 1);
+		
+		// generate balls
+		Ball[] balls = generateNBalls(2, -0.8, 0.8, -0.8, 0.8, 0.05, 0.2, 0.04);
+				
+		// animation loop
+		while(true) {
+			
+			// clear background
+			StdDraw.clear(StdDraw.GRAY);
+			
+			for(int i = 0; i < balls.length; i++) { // loop every ball
+				// bounce off wall according to law of elastic collision
+				if(Math.abs(balls[i].nextPosition()[0]) > (1 - balls[i].getRadius())) { // vertical wall
+					balls[i].changeXDirection();
+				}
+				if(Math.abs(balls[i].nextPosition()[1]) > (1 - balls[i].getRadius())) { // horizontal wall
+					balls[i].changeYDirection();
+				}
+				
+				// check for collision with all other balls
+				for(int j = i + 1; j < balls.length; j++) {
+					/*
+					 * This loop goes through every following ball in
+					 * the array, this prevents balls being checked
+					 * twice if all the loop started at j = 0 every time
+					 */
+					if(balls[i].hasCollidedWith(balls[j])) {
+						// where there is a collision, update both balls
+						Ball.ellasticCollision(balls[i], balls[j]);
+						
+						// swap colours
+						Color temp = balls[i].getColor();
+						balls[i].setColor(balls[j].getColor());
+						balls[j].setColor(temp);
+					}
+				}
+				
+				balls[i].move(); // move the ball
+				
+				// draw the ball
+				StdDraw.setPenColor(balls[i].getColor());
+				StdDraw.filledCircle(balls[i].getxPosition(), balls[i].getyPosition(), balls[i].getRadius());
+			}
+			
+			// display and pause for 20ms
+			StdDraw.show(20);
+			
+		}
+	}	
 	
-	
-	
+	public static void exercise2b() {
+		// set up canvas
+		StdDraw.setScale(-1, 1);
+
+		int n = 10; // number of balls to generate
+
+		// Structure of arrays for the balls
+		double[][] positions = new double[n][2];
+		double[][] velocities = new double[n][2];
+		double[] radii = new double[n];
+		double[] masses = new double[n];
+		Color[] colors = new Color[n];
+		
+		// generate balls
+		Random randomNumberGenerator = new Random();
+		
+		for(int i = 0; i < n; i++) {
+			// position
+			positions[i] = new double[] {(randomNumberGenerator.nextDouble() * 1.6) - 0.8, // random x position
+					(randomNumberGenerator.nextDouble() * 1.6) - 0.8}; // random y position
+			
+			// velocity
+			velocities[i] = new double[] {randomNumberGenerator.nextDouble() * 0.04, // random x velocity
+					randomNumberGenerator.nextDouble() * 0.04}; // random y velocity
+			
+			// radius
+			radii[i] = (randomNumberGenerator.nextDouble() * (0.2 - 0.05)) + 0.05;
+			
+			// mass
+			masses[i] = Math.PI * Math.pow(radii[i], 2); // generate mass from the area of the ball
+			
+			// color
+			colors[i] = new Color(randomNumberGenerator.nextFloat(), randomNumberGenerator.nextFloat(), randomNumberGenerator.nextFloat());
+		}
+		
+		// animation loop
+		while(true) {
+
+			// clear background
+			StdDraw.clear(StdDraw.GRAY);
+
+			for(int i = 0; i < n; i++) { // loop every ball
+				// bounce off wall according to law of elastic collision
+				if(Math.abs(positions[i][0]) > (1 - radii[i])) { // vertical wall
+					velocities[i][0] = - velocities[i][0];
+				}
+				if(Math.abs(positions[i][1]) > (1 - radii[i])) { // horizontal wall
+					velocities[i][1] = - velocities[i][1];
+				}
+
+				// check for collision with all other balls
+				for(int j = i + 1; j < n; j++) {
+					/*
+					 * This loop goes through every following ball in
+					 * the array, this prevents balls being checked
+					 * twice if all the loop started at j = 0 every time
+					 */
+					if((Math.abs((positions[i][0] + velocities[i][0]) - (positions[j][0] + velocities[j][0])) < radii[i] + radii[j])
+							&& (Math.abs((positions[i][1] + velocities[i][1]) - (positions[j][1] + velocities[j][1])) < radii[i] + radii[j])) {
+						
+						// law of elastic collision on x velocities
+						double[] resultingVelocity = ellasticCollision(velocities[i][0], masses[i], velocities[j][0], masses[j]);
+						
+						// apply new x velocities
+						velocities[i][0] = resultingVelocity[0];
+						velocities[j][0] = resultingVelocity[1];
+						
+						// law of elastic collision on y velocities
+						resultingVelocity = ellasticCollision(velocities[i][1], masses[i], velocities[j][1], masses[j]);
+					
+						// apply new y velocities
+						velocities[i][1] = resultingVelocity[0];
+						velocities[j][1] = resultingVelocity[1];
+					}
+				}
+
+				// update position
+				positions[i][0] += velocities[i][0];
+				positions[i][1] += velocities[i][1];
+
+				// draw the ball
+				StdDraw.setPenColor(colors[i]);
+				StdDraw.filledCircle(positions[i][0], positions[i][1], radii[i]);
+			}
+
+			// display and pause for 20ms
+			StdDraw.show(20);
+
+		}
+	}
 }
