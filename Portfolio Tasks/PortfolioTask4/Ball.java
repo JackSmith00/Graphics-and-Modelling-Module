@@ -156,14 +156,25 @@ public class Ball {
 		 * Java code. No code was copied directly.
 		 */
 		
+		double initialBall1XVelocity = ball1.xVelocity;
+		double initialBall2XVelocity = ball2.xVelocity;
+		double initialBall1YVelocity = ball1.yVelocity;
+		double initialBall2YVelocity = ball2.yVelocity;
+		/*
+		 * these variables have been declared as originally
+		 * they were directly accessed, however, as the
+		 * velocity of ball 1 is updated first, this updated
+		 * value would then be used to calculate the new velocity
+		 * of ball 2, leading to inaccurate results
+		 */
+		
 		// update x velocities
-		ball1.xVelocity = ((ball1.mass - ball2.mass) / (ball1.mass + ball2.mass)) * ball1.xVelocity+ ((2 * ball2.mass) / (ball1.mass + ball2.mass)) * ball2.xVelocity;	
-		ball2.xVelocity = ((2 * ball1.mass) / (ball1.mass + ball2.mass)) * ball1.xVelocity + ((ball2.mass - ball1.mass) / (ball1.mass + ball2.mass)) * ball2.xVelocity;
+		ball1.xVelocity = ((ball1.mass - ball2.mass) / (ball1.mass + ball2.mass)) * initialBall1XVelocity + ((2 * ball2.mass) / (ball1.mass + ball2.mass)) * initialBall2XVelocity;	
+		ball2.xVelocity = ((2 * ball1.mass) / (ball1.mass + ball2.mass)) * initialBall1XVelocity + ((ball2.mass - ball1.mass) / (ball1.mass + ball2.mass)) * initialBall2XVelocity;
 		
 		// update y velocities
-		ball1.yVelocity = ((ball1.mass - ball2.mass) / (ball1.mass + ball2.mass)) * ball1.yVelocity+ ((2 * ball2.mass) / (ball1.mass + ball2.mass)) * ball2.yVelocity;	
-		ball2.yVelocity = ((2 * ball1.mass) / (ball1.mass + ball2.mass)) * ball1.yVelocity + ((ball2.mass - ball1.mass) / (ball1.mass + ball2.mass)) * ball2.yVelocity;
-		
+		ball1.yVelocity = ((ball1.mass - ball2.mass) / (ball1.mass + ball2.mass)) * initialBall1YVelocity+ ((2 * ball2.mass) / (ball1.mass + ball2.mass)) * initialBall2YVelocity;	
+		ball2.yVelocity = ((2 * ball1.mass) / (ball1.mass + ball2.mass)) * initialBall1YVelocity + ((ball2.mass - ball1.mass) / (ball1.mass + ball2.mass)) * initialBall2YVelocity;
 	}
 
 	

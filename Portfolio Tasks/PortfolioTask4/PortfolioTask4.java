@@ -160,9 +160,19 @@ public class PortfolioTask4 {
 		// array to hold all generated balls
 		Ball[] output = new Ball[n];
 		
+		double avaliableAreaX = (maxX - minX) / n;
+		double avaliableAreaY = (maxY - minY) / n;
+		
 		// generate n balls
 		for(int i = 0; i < n; i++) {
-			output[i] = randomBallGenerator(minX, maxX, minY, maxY, minRadius, maxRadius, maxVelocity);
+			output[i] = randomBallGenerator(minX + (i * avaliableAreaX), minX + ((i + 1) * avaliableAreaX),
+					/*
+					 * The parameters above and below try to improve the span
+					 * positions of each ball to reduce how often balls spawn
+					 * inside of each other
+					 */
+					minY + (i * avaliableAreaY), minY  + ((i + 1) * avaliableAreaY),
+					minRadius, maxRadius, maxVelocity);
 		}
 		
 		// return an array of all balls generated
@@ -174,7 +184,7 @@ public class PortfolioTask4 {
 		StdDraw.setScale(-1, 1);
 		
 		// generate balls
-		Ball[] balls = generateNBalls(5, -0.8, 0.8, -0.8, 0.8, 0.05, 0.2, 0.04);
+		Ball[] balls = generateNBalls(10, -0.8, 0.8, -0.8, 0.8, 0.05, 0.2, 0.04);
 				
 		// animation loop
 		while(true) {
