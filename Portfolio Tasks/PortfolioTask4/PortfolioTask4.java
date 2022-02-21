@@ -1,10 +1,15 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Polygon;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.Line2D;
 import java.util.Random;
 
 public class PortfolioTask4 {
 
 	public static void main(String[] args) {
-		exercise2b();
+		exercise4();
 	}
 	
 	/**
@@ -12,7 +17,7 @@ public class PortfolioTask4 {
 	 * with their initial velocity and mass given, and their
 	 * resulting velocities from the collision returned in an
 	 * array.
-	 * 
+	 * 	
 	 * @param initialVelocity1 the current velocity of the first ball
 	 * @param mass1 the mass of the first ball
 	 * @param initialVelocity2 the current velocity of the second ball
@@ -368,6 +373,162 @@ public class PortfolioTask4 {
 			// display and pause for 20ms
 			StdDraw.show(20);
 
+		}
+	}
+
+	private static void circlePhrase(String phrase, float radius, float x0, float y0, boolean clockwise) {
+		
+		// add space to end of phrase for loop
+		if(phrase.charAt(phrase.length() - 1) != ' ') {
+			phrase += " ";
+		}
+		// convert phrase to a char array
+		char[] charactersInPhrase = phrase.toCharArray();
+
+		// angle between any letter in the circle
+		double angleBetweenLetters = (2 * Math.PI) / charactersInPhrase.length;
+
+		double x, y;
+		
+		double rotation = 0;
+		int steps = 600; // circle split into 600 steps
+		/*
+		 * rotationStep will hold the amount to increase the rotation
+		 * with each iteration. Will be positive for clockwise and 
+		 * negative for anti-clockwise
+		 */
+		double rotationStep = clockwise ? (2 * Math.PI) / steps : -(2 * Math.PI / steps);
+
+		// animation loop
+		while(true) {
+			// clear canvas
+			StdDraw.clear();
+			
+			// loop each letter and draw on the circle
+			for(int i = 0; i < charactersInPhrase.length; i++) {
+
+				x = x0 + radius * Math.sin(i * angleBetweenLetters + rotation);
+				y = y0 + radius * Math.cos(i * angleBetweenLetters + rotation);
+
+				// draw letter on circle
+				StdDraw.text(x, y, String.valueOf(charactersInPhrase[i]));
+			}
+			
+			// update rotation
+			rotation += rotationStep;
+			if(rotation == 2 * Math.PI || rotation == - 2 * Math.PI) {
+				rotation = 0;
+			}
+			
+			StdDraw.show(20);
+		}
+	}
+	
+	public static void exercise3() {
+		// set up frame
+		StdDraw.setScale(-1.4, 1.4);
+		
+		// display phrase
+		circlePhrase("Computer Graphics", 1, 0, 0, true);
+	}
+	
+	private static void countdownClockFace(float radius, float x0, float y0) {
+		
+		// countdown colour
+		StdDraw.setPenColor(94, 102, 150);
+		
+		// outer circle
+		StdDraw.setPenRadius(radius * 0.03);
+		StdDraw.circle(x0, y0, radius);
+		
+		// quarter lines
+		StdDraw.setPenRadius(radius * 0.006);
+		StdDraw.line(x0, y0 + radius, x0, y0 - radius);
+		StdDraw.line(x0 + radius, y0, x0 - radius, y0);
+		
+		// dash lines
+		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(30)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(30)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(30)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(30)));
+		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(60)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(60)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(60)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(60)));
+		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(120)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(120)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(120)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(120)));
+		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(150)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(150)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(150)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(150)));
+		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(-30)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(-30)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(-30)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(-30)));
+		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(-60)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(-60)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(-60)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(-60)));
+		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(-120)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(-120)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(-120)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(-120)));
+		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(-150)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(-150)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(-150)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(-150)));
+	}
+	
+	public static void exercise4() {
+		// set up frame
+		StdDraw.setScale(-1.4, 1.4);
+		
+		// colours
+		Color countdownBlue = new Color(94, 102, 150);
+		Color clockHandOutlineColor = new Color(170, 160, 160);
+		
+		Area clockHand = StdDraw.triangleArea(
+				new double[] {-0.07, 0, 0.07},
+				new double[] {0, 0.8, 0});
+		
+		Area clockHandOutline = StdDraw.triangleArea(
+				new double[] {-0.1, 0, 0.1},
+				new double[] {0, 0.8, 0});
+		
+		
+		double clockHandRotation = Math.PI / 1800; // rotate for every frame
+		double[] centerOfRotation = StdDraw.scaledCoordinate(0, 0);
+		
+		AffineTransform rotation = new AffineTransform();
+		rotation.rotate(clockHandRotation, centerOfRotation[0], centerOfRotation[1]);
+		
+		double secondProgress = 90;
+		BasicStroke progressStroke = new BasicStroke(0.4f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+		
+		// animation loop
+		for(int frame = 0; frame < 1800; frame++) { // 60fps for 30secs -> 1,800 frames
+			
+			// clear frame
+			StdDraw.clear();
+			
+			// draw first frame
+			// clock background
+			StdDraw.setPenColor(210, 200, 200);
+			StdDraw.filledCircle(0, 0, 1);
+			
+			// progress lights
+			// update progress
+			if(frame % 60 == 0 && frame != 0 || frame == 1799) {
+				/*
+				 * frame 1799 is included to make sure the final
+				 * segment is draw, it is only 1 frame early so
+				 * the difference will be minimal
+				 */
+				secondProgress -= 6; // area of 1 second on the clock (180° / 30)
+			}
+			// draw progress lights
+			StdDraw.setStroke(progressStroke);
+			StdDraw.setPenColor(245, 230, 190);
+			StdDraw.arc(0, 0, 0.7, secondProgress, 90);
+			
+			
+			// clock face			
+			countdownClockFace(1, 0, 0);
+			
+			// clock hand outline
+			StdDraw.setPenColor(clockHandOutlineColor);
+			StdDraw.filledCircle(0, 0, 0.12);
+			StdDraw.drawArea(clockHandOutline); // draw clock hand outline
+			
+			// clock hand
+			StdDraw.setPenColor(countdownBlue);
+			StdDraw.filledCircle(0, 0, 0.1);
+			StdDraw.drawArea(clockHand); // draw clock hand
+			
+			// pause for 1 frame
+			StdDraw.show(17); // 1000 (1 sec) / 60 (fps) ≈ 17
+			
+			// update clock hand for next iteration
+			clockHand.transform(rotation);
+			clockHandOutline.transform(rotation);
 		}
 	}
 }

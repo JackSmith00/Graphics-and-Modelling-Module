@@ -30,6 +30,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MediaTracker;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 
@@ -1483,6 +1484,55 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     public static void drawArea(Area area) {
     	offscreen.fill(area);
     	draw();
+    }
+    
+    /**
+     * Used to create an Area of a triangle, with coordinates
+     * scaled for use in StdDraw
+     * 
+     * @param xPoints x coordinates of each vertex
+     * @param yPoints y coordinates of each vertex
+     * @return an Area object of the triangle, ready for use with StdDraw
+     */
+    public static Area triangleArea(double[] xPoints, double[] yPoints) {
+    	
+    	// arrays to hold scaled coordinates
+    	int[] scaledXPoints = new int[3];
+    	int[] scaledYPoints = new int[3];
+    	
+    	for(int i = 0; i < 3; i++) { // scale each coordinate
+    		scaledXPoints[i] = Math.round((float) scaleX(xPoints[i]));
+    		scaledYPoints[i] = Math.round((float) scaleY(yPoints[i]));
+    	}
+    	
+    	// return scaled area
+    	return new Area(new Polygon(scaledXPoints, scaledYPoints, 3));
+    	
+    }
+    
+    /**
+     * Returns a scaled coordinate for use in StdDraw
+     * 
+     * @param x the x coordinate to scale
+     * @param y the y coordinate to scale
+     * @return an array of scaled coordinates in the form {x, y}
+     */
+    public static double[] scaledCoordinate(double x, double y) {
+    	return new double[] {scaleX(x), scaleY(y)};
+    }
+    
+    /**
+     * Used to change the pen stroke on the canvas in StdDraw.
+     * The given stroke has it's width scaled to match with
+     * the StdDraw canvas scaling.
+     * 
+     * @param stroke the new stroke to use
+     */
+    public static void setStroke(BasicStroke stroke) {
+    	float scaledRadius = (float) ((stroke.getLineWidth() / 2) * DEFAULT_SIZE);
+        BasicStroke scaledStroke = new BasicStroke(scaledRadius, stroke.getEndCap(), stroke.getLineJoin());
+        // BasicStroke stroke = new BasicStroke(scaledPenRadius);
+        offscreen.setStroke(scaledStroke);
     }
     
     /***************************************************************************
