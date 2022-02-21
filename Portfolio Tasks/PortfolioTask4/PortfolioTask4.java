@@ -6,10 +6,18 @@ import java.awt.geom.Area;
 import java.awt.geom.Line2D;
 import java.util.Random;
 
+/**
+ * Class to address all exercises for Portfolio Task 4
+ * 
+ * last updated: 21/2/22
+ * 
+ * @author Jack Smith - 24265241
+ *
+ */
 public class PortfolioTask4 {
 
 	public static void main(String[] args) {
-		exercise4();
+		exercise2aColorSwap();
 	}
 	
 	/**
@@ -44,7 +52,12 @@ public class PortfolioTask4 {
 		// return the final velocities in an array
 		return new double[] {finalVelocity1, finalVelocity2};
 	}
-	
+
+	/**
+	 * Solution to exercise 1. Draws 2 moving balls on the canvas
+	 * using provided pseudocode and adds collisions between
+	 * the two balls.
+	 */
 	public static void exercise1() {
 		// set up canvas
 		StdDraw.setScale(-1, 1);
@@ -137,7 +150,9 @@ public class PortfolioTask4 {
 	 * @return a new Ball object within the specified parameters
 	 */
 	private static Ball randomBallGenerator(double minX, double maxX, double minY, double maxY, double minRadius, double maxRadius, double maxVelocity) {
-		Random randomNumberGenerator = new Random();
+		Random randomNumberGenerator = new Random(); // to generate random numbers
+		
+		// generate attributes of a ball within the given parameters
 		double xPosition = (randomNumberGenerator.nextDouble() * (maxX - minX)) + minX;
 		double yPosition = (randomNumberGenerator.nextDouble() * (maxY - minY)) + minY;
 		double radius = (randomNumberGenerator.nextDouble() * (maxRadius - minRadius)) + minRadius;
@@ -145,6 +160,7 @@ public class PortfolioTask4 {
 		double yVelocity = randomNumberGenerator.nextDouble() * maxVelocity;
 		Color color = new Color(randomNumberGenerator.nextFloat(), randomNumberGenerator.nextFloat(), randomNumberGenerator.nextFloat());
 		
+		// return a ball with the generated values
 		return new Ball(xPosition, yPosition, radius, xVelocity, yVelocity, color);
 	}
 	
@@ -183,7 +199,12 @@ public class PortfolioTask4 {
 		// return an array of all balls generated
 		return output;
 	}
-	
+
+	/**
+	 * First solution to exercise 2. Uses an Array of Structures approach
+	 * with a Ball class to represent each ball in the canvas.
+	 * Randomly generates 10 balls to display, with collision between all balls.
+	 */
 	public static void exercise2a() {
 		// set up canvas
 		StdDraw.setScale(-1, 1);
@@ -232,12 +253,17 @@ public class PortfolioTask4 {
 		}
 	}
 	
+	/**
+	 * An extra solution for exercise 2. Works in the same way as
+	 * exercise2a, but any collision causes the balls to swap
+	 * colours. 3 balls are generated to showcase this.
+	 */
 	public static void exercise2aColorSwap() {
 		// set up canvas
 		StdDraw.setScale(-1, 1);
 		
 		// generate balls
-		Ball[] balls = generateNBalls(2, -0.8, 0.8, -0.8, 0.8, 0.05, 0.2, 0.04);
+		Ball[] balls = generateNBalls(3, -0.8, 0.8, -0.8, 0.8, 0.05, 0.2, 0.04);
 				
 		// animation loop
 		while(true) {
@@ -285,6 +311,12 @@ public class PortfolioTask4 {
 		}
 	}	
 	
+	/**
+	 * Second solution to exercise 2. Uses a Structure of Arrays
+	 * approach, where all attributes of the balls are stored across
+	 * several arrays. Randomly generates 10 balls to display,
+	 * with collision between all balls.
+	 */
 	public static void exercise2b() {
 		// set up canvas
 		StdDraw.setScale(-1, 1);
@@ -299,7 +331,7 @@ public class PortfolioTask4 {
 		Color[] colors = new Color[n];
 		
 		// generate balls
-		Random randomNumberGenerator = new Random();
+		Random randomNumberGenerator = new Random(); // to generate random numbers in the loop
 		
 		for(int i = 0; i < n; i++) {
 			// position
@@ -372,13 +404,24 @@ public class PortfolioTask4 {
 
 			// display and pause for 20ms
 			StdDraw.show(20);
-
 		}
 	}
 
+	/**
+	 * This method animates a phrase on the circumference
+	 * of a revolving circle. The direction and position
+	 * can be specified. Drawn using StdDraw.
+	 * 
+	 * @param phrase the phrase to display on the circumference of the circle
+	 * @param radius the radius of the phrase circle
+	 * @param x0 the centre x coordinate of the circle
+	 * @param y0 the centre y coordinate of the circle
+	 * @param clockwise a boolean stating whether the circle should rotate clockwise,
+	 * if not then rotation will be anti–clockwise
+	 */
 	private static void circlePhrase(String phrase, float radius, float x0, float y0, boolean clockwise) {
 		
-		// add space to end of phrase for loop
+		// add space to end of phrase if there isn't one already
 		if(phrase.charAt(phrase.length() - 1) != ' ') {
 			phrase += " ";
 		}
@@ -423,7 +466,12 @@ public class PortfolioTask4 {
 			StdDraw.show(20);
 		}
 	}
-	
+
+	/**
+	 * Shows solution to exercise 3. Simply sets up the canvas
+	 * and calls the circlePhrase method where the animation
+	 * is handled.
+	 */
 	public static void exercise3() {
 		// set up frame
 		StdDraw.setScale(-1.4, 1.4);
@@ -432,6 +480,17 @@ public class PortfolioTask4 {
 		circlePhrase("Computer Graphics", 1, 0, 0, true);
 	}
 	
+	/**
+	 * Draws the main components of the Countdown clock.
+	 * This is the border, quarter lines and the dashes every
+	 * 5 seconds on the clock face. This method does not draw the
+	 * clock hand or background as they need to be created elsewhere for
+	 * the animation.
+	 * 
+	 * @param radius the radius of the clock face
+	 * @param x0 the centre x coordinate of the clock face 
+	 * @param y0 the centre y coordinate of the clock face
+	 */
 	private static void countdownClockFace(float radius, float x0, float y0) {
 		
 		// countdown colour
@@ -446,7 +505,7 @@ public class PortfolioTask4 {
 		StdDraw.line(x0, y0 + radius, x0, y0 - radius);
 		StdDraw.line(x0 + radius, y0, x0 - radius, y0);
 		
-		// dash lines
+		// dash lines (coordinates have been found using sin and cos, similar to the circle phrase method above)
 		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(30)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(30)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(30)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(30)));
 		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(60)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(60)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(60)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(60)));
 		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(120)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(120)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(120)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(120)));
@@ -457,6 +516,12 @@ public class PortfolioTask4 {
 		StdDraw.line(x0 + (radius * 0.85) * Math.cos(Math.toRadians(-150)), y0 + (radius * 0.85) * Math.sin(Math.toRadians(-150)), x0 + (radius * 0.65) * Math.cos(Math.toRadians(-150)), y0 + (radius * 0.65) * Math.sin(Math.toRadians(-150)));
 	}
 	
+	/**
+	 * Solution to exercise 4. Draw the Coundown clock, styles closely to the
+	 * original and animates the countdown from 0-30 seconds. Clock hand rotates
+	 * smoothly at 60fps whilst the second progress light only updates once
+	 * per second.
+	 */
 	public static void exercise4() {
 		// set up frame
 		StdDraw.setScale(-1.4, 1.4);
@@ -465,6 +530,7 @@ public class PortfolioTask4 {
 		Color countdownBlue = new Color(94, 102, 150);
 		Color clockHandOutlineColor = new Color(170, 160, 160);
 		
+		// initialise areas for the rotating clock hand
 		Area clockHand = StdDraw.triangleArea(
 				new double[] {-0.07, 0, 0.07},
 				new double[] {0, 0.8, 0});
@@ -473,15 +539,15 @@ public class PortfolioTask4 {
 				new double[] {-0.1, 0, 0.1},
 				new double[] {0, 0.8, 0});
 		
+		// set up rotation for use in the loop
+		double clockHandRotation = Math.PI / 1800; // rotation amount for every frame
+		double[] centerOfRotation = StdDraw.scaledCoordinate(0, 0); // where to rotate from in StdDraw
 		
-		double clockHandRotation = Math.PI / 1800; // rotate for every frame
-		double[] centerOfRotation = StdDraw.scaledCoordinate(0, 0);
+		AffineTransform rotation = new AffineTransform(); // object to perform the rotation
+		rotation.rotate(clockHandRotation, centerOfRotation[0], centerOfRotation[1]); // give values of the rotation
 		
-		AffineTransform rotation = new AffineTransform();
-		rotation.rotate(clockHandRotation, centerOfRotation[0], centerOfRotation[1]);
-		
-		double secondProgress = 90;
-		BasicStroke progressStroke = new BasicStroke(0.4f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+		double secondProgress = 90; // initial angle of the seconds progress arc
+		BasicStroke progressStroke = new BasicStroke(0.4f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL); // stroke to be used to draw progress
 		
 		// animation loop
 		for(int frame = 0; frame < 1800; frame++) { // 60fps for 30secs -> 1,800 frames
@@ -505,26 +571,26 @@ public class PortfolioTask4 {
 				secondProgress -= 6; // area of 1 second on the clock (180° / 30)
 			}
 			// draw progress lights
-			StdDraw.setStroke(progressStroke);
-			StdDraw.setPenColor(245, 230, 190);
-			StdDraw.arc(0, 0, 0.7, secondProgress, 90);
+			StdDraw.setStroke(progressStroke); // change to the custom stroke
+			StdDraw.setPenColor(245, 230, 190); // colour of the progress light
+			StdDraw.arc(0, 0, 0.7, secondProgress, 90); // draw the progress
 			
 			
 			// clock face			
 			countdownClockFace(1, 0, 0);
 			
 			// clock hand outline
-			StdDraw.setPenColor(clockHandOutlineColor);
-			StdDraw.filledCircle(0, 0, 0.12);
+			StdDraw.setPenColor(clockHandOutlineColor); // grey outline colour
+			StdDraw.filledCircle(0, 0, 0.12); // middle circle part
 			StdDraw.drawArea(clockHandOutline); // draw clock hand outline
 			
 			// clock hand
-			StdDraw.setPenColor(countdownBlue);
-			StdDraw.filledCircle(0, 0, 0.1);
+			StdDraw.setPenColor(countdownBlue); // main clock hand colour
+			StdDraw.filledCircle(0, 0, 0.1); // middle circle part
 			StdDraw.drawArea(clockHand); // draw clock hand
 			
 			// pause for 1 frame
-			StdDraw.show(17); // 1000 (1 sec) / 60 (fps) ≈ 17
+			StdDraw.show(17); // 1000 (≈1 sec) / 60 (fps) = 16.67 ≈ 17
 			
 			// update clock hand for next iteration
 			clockHand.transform(rotation);
