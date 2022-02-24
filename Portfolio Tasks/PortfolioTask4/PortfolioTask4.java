@@ -1,15 +1,13 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
-import java.awt.geom.Line2D;
 import java.util.Random;
 
 /**
  * Class to address all exercises for Portfolio Task 4
  * 
- * last updated: 21/2/22
+ * last updated: 23/2/22
  * 
  * @author Jack Smith - 24265241
  *
@@ -17,7 +15,7 @@ import java.util.Random;
 public class PortfolioTask4 {
 
 	public static void main(String[] args) {
-		exercise2aColorSwap();
+		exercise5();
 	}
 	
 	/**
@@ -425,11 +423,9 @@ public class PortfolioTask4 {
 		if(phrase.charAt(phrase.length() - 1) != ' ') {
 			phrase += " ";
 		}
-		// convert phrase to a char array
-		char[] charactersInPhrase = phrase.toCharArray();
 
 		// angle between any letter in the circle
-		double angleBetweenLetters = (2 * Math.PI) / charactersInPhrase.length;
+		double angleBetweenLetters = (2 * Math.PI) / phrase.length();
 
 		double x, y;
 		
@@ -448,13 +444,13 @@ public class PortfolioTask4 {
 			StdDraw.clear();
 			
 			// loop each letter and draw on the circle
-			for(int i = 0; i < charactersInPhrase.length; i++) {
+			for(int i = 0; i < phrase.length(); i++) {
 
 				x = x0 + radius * Math.sin(i * angleBetweenLetters + rotation);
 				y = y0 + radius * Math.cos(i * angleBetweenLetters + rotation);
 
 				// draw letter on circle
-				StdDraw.text(x, y, String.valueOf(charactersInPhrase[i]));
+				StdDraw.text(x, y, String.valueOf(phrase.charAt(i)));
 			}
 			
 			// update rotation
@@ -463,7 +459,7 @@ public class PortfolioTask4 {
 				rotation = 0;
 			}
 			
-			StdDraw.show(20);
+			StdDraw.show(17);
 		}
 	}
 
@@ -596,5 +592,31 @@ public class PortfolioTask4 {
 			clockHand.transform(rotation);
 			clockHandOutline.transform(rotation);
 		}
+	}
+	
+	/**
+	 * Uses StdDraw to draw ever shrinking and rotating squares
+	 * inside of each other on the canvas, aiming to replicate
+	 * that in the brief
+	 */
+	public static void exercise5() {
+		// set up canvas
+		StdDraw.setScale(-1, 1);
+		
+		int nSquares = 50; // number of squares to draw
+		
+		// animation loop
+		for(double i = 0; i < nSquares; i++) {
+			/*
+			 * The formula below for the s parameter is 
+			 * inspired by an equation found at the following resource:
+			 * 
+			 * Malyala, S., 2017. Can anyone help me with a graph: exponential but never reaches 1 [online]. 
+			 * Available at: https://math.stackexchange.com/questions/2323103/can-anyone-help-me-with-a-graph-exponential-but-never-reaches-1
+			 * [Accessed 23 February 2022].
+			 */
+			StdDraw.rotatedSquare(0, 0, 0.8, 1 - (Math.pow(1.1, -i)), -6 * i); // draw rotated square
+			StdDraw.show(100); // wait a short period before the next iteration
+		}		
 	}
 }

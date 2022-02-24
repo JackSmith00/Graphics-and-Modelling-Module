@@ -1531,8 +1531,37 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     public static void setStroke(BasicStroke stroke) {
     	float scaledRadius = (float) ((stroke.getLineWidth() / 2) * DEFAULT_SIZE);
         BasicStroke scaledStroke = new BasicStroke(scaledRadius, stroke.getEndCap(), stroke.getLineJoin());
-        // BasicStroke stroke = new BasicStroke(scaledPenRadius);
         offscreen.setStroke(scaledStroke);
+    }
+    
+    /**
+     * Used to draw a square with given rotation angle,
+     * and reduced by a given percentage in decimal form.
+     * 
+     * @param x the centre x coordinate of the square
+     * @param y the centre y coordinate of the square
+     * @param halfLength half the length of a side of the square
+     * @param s the decimal percentage to reduce the square size by
+     * @param t the angle at which to rotate the square
+     */
+    public static void rotatedSquare(double x, double y, double halfLength, double s, double t) {
+    	/* 
+    	 * scale parameters for StdDraw.
+    	 * 
+    	 * The code below is an expansion of the code from
+    	 * the 'square()' method (Sedgewick & Wayne, 2017).
+    	 * It has been adapted to include the scaling parameter
+    	 * on the size variables and to rotate the canvas.
+    	 */
+        double xs = scaleX(x);
+        double ys = scaleY(y);
+        double ws = factorX(2 * halfLength * (1 - s));
+        double hs = factorY(2 * halfLength * (1 - s));
+        
+        offscreen.rotate(Math.toRadians(t), xs, ys); // rotate the canvas
+        offscreen.draw(new Rectangle2D.Double(xs - ws/2, ys - hs/2, ws, hs)); // draw the square to the canvas
+        offscreen.rotate(Math.toRadians(-t), xs, ys); // revert canvas to the original rotation
+        draw(); // update the display
     }
     
     /***************************************************************************
