@@ -1,3 +1,4 @@
+
 /**
  * Class to address all exercises for Portfolio Task 5
  * 
@@ -8,6 +9,7 @@
  */
 public class PortfolioTask5 {
 
+	
 	public static void main(String[] args) {
 		
 		exercise1();
@@ -54,5 +56,20 @@ public class PortfolioTask5 {
 	public static void exercise2() {
 		// set the scale
 		StdDraw3D.setScale(-10, 10);
+		
+		// sun
+		StdDraw3D.Shape sun = StdDraw3D.wireSphere(0, 0, 0, 4);
+		
+		// planet
+		StdDraw3D.Shape planet = StdDraw3D.sphere(7, 0, 0, 1);
+		
+		while(true) {
+			// rotate the sun
+			sun.rotate(6, 0, 0);
+			
+			// move the planet
+			planet.move(1, 0, 0);
+		}
+		
 	}
 }
