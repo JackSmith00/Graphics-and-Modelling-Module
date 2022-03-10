@@ -142,23 +142,31 @@ public class PortfolioTask5 {
 		double planetRotationSpeed = 0.2;
 		
 		boolean clockwise = true;
+		boolean paused = false;
 		
 		// animation loop
 		while(true) {
 			
-			if(StdDraw3D.mouse3Pressed()) { // when middle mouse button is pressed
-				StdDraw3D.finished(); // end animation
+			if(StdDraw3D.mouse2Pressed()) { // when middle mouse button is pressed
+				paused = !paused; // toggle the paused state
+				while(StdDraw3D.mouse2Pressed()) { // wait until middle button is released before continuing
+					continue;
+				}
 			}
+			if(paused) { // don't animate when paused
+				continue;
+			}
+			
 			if(StdDraw3D.mouse1Pressed()) { // when left mouse button is pressed
 				clockwise = false; // go anti-clockwise
-			} else if(StdDraw3D.mouse2Pressed()) { // when right mouse button is pressed
+			} else if(StdDraw3D.mouse3Pressed()) { // when right mouse button is pressed
 				clockwise = true; // go clockwise
 			}
 			
 			if(clockwise) {
-				angle -= planetOrbitSpeed;
+				angle -= planetOrbitSpeed; // negative for clockwise
 			} else {
-				angle += planetOrbitSpeed;
+				angle += planetOrbitSpeed; // positive for anti-clockwise
 			}
 			
 			// rotate the sun
