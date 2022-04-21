@@ -1,4 +1,3 @@
-import StdDraw.StdDraw;
 
 public class Week4 {
 

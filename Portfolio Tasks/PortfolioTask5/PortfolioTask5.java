@@ -62,7 +62,7 @@ public class PortfolioTask5 {
 	 */
 	private static void rotateAroundPoint(StdDraw3D.Shape shape, StdDraw3D.Vector3D origin, double radius, double angle, char axis) {
 		
-		StdDraw3D.Vector3D newPosition = null; // intitalise new position vector
+		StdDraw3D.Vector3D newPosition = null; // initialise new position vector
 		
 		switch(axis) { // switch each axis
 		case 'x':
@@ -77,7 +77,7 @@ public class PortfolioTask5 {
 		}
 		
 		if(newPosition != null) { // if no valid position, do not move
-			shape.move(newPosition.minus(shape.getPosition())); // move by the difference between the new position and the current positon
+			shape.move(newPosition.minus(shape.getPosition())); // move by the difference between the new position and the current position
 		}
 	}
 	
@@ -178,7 +178,7 @@ public class PortfolioTask5 {
 			if(angle >= 2 * Math.PI || angle <= -2 * Math.PI) { // prevent angle continuously growing
 				angle = 0;
 			}
-
+			
 			// rotate the planet
 			planet.rotate(0, 0, -planetRotationSpeed); // negative for clockwise
 
