@@ -11,21 +11,20 @@
 	<classpathentry kind="src" path="PortfolioTask4"/>
 	<classpathentry kind="src" path="PortfolioTask5"/>
 	<classpathentry kind="src" path="StdDraw"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/CIS2160-StdDraw.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/vecmath.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/gluegen-rt-natives-linux-amd64.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/gluegen-rt-natives-linux-i586.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/gluegen-rt-natives-macosx-universal.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/gluegen-rt-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/gluegen-rt-natives-windows-i586.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/j3dcore.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/j3dutils.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/jogl-all-natives-linux-amd64.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/jogl-all-natives-linux-i586.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/jogl-all-natives-macosx-universal.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/jogl-all-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/jogl-all-natives-windows-i586.jar"/>
-	<classpathentry kind="lib" path="/Users/Jack/Documents/UNI/Graphics &amp; Modelling/CIS2160 Java 2D &amp; 3D helper classes JAR files/jogl-all.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/gluegen-rt-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/gluegen-rt-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/j3dcore.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/j3dutils.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/jogl-all.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/jogl-all-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/jogl-all-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/jogl-all-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/jogl-all-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="/Coursework 2/jars/vecmath.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
