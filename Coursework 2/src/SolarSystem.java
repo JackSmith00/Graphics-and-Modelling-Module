@@ -93,20 +93,14 @@ public class SolarSystem {
 		
 		/* create planets - to scale relative to each other
 		 * 
-		 * The following resources where used to research the orbital radius,
+		 * The following resources were used to research the orbital radius,
 		 * orbital period, size, rotation period and initial position of all of
 		 * the planets.
 		 * 
-		 * For the size and orbital information:
+		 * For the size, rotation period and orbital information:
 		 * 
 		 * NASA, 2022. Planet Compare [online].
 		 * Available from: https://solarsystem.nasa.gov/planet-compare/
-		 * [Accessed 27 April 2022].
-		 * 
-		 * For the rotation period:
-		 * 
-		 * Hipschman, R., 2000. Your age on other worlds [online].
-		 * Available from: https://www.exploratorium.edu/ronh/age/
 		 * [Accessed 27 April 2022].
 		 * 
 		 * For the initial positions:
@@ -153,7 +147,7 @@ public class SolarSystem {
 		
 		/* create moons
 		 * 
-		 * The following resources where used to research the orbital radius,
+		 * The following resources were used to research the orbital radius,
 		 * orbital period, size, rotation period and initial position of all of
 		 * the moons. The orbital radii have been adjusted to make them more
 		 * visible.
@@ -168,7 +162,7 @@ public class SolarSystem {
 		 * 
 		 */
 		moon = new AstronomicalBody(StdDraw3D.sphere(0.00257*AU *2 + 20, 0, 0, 1.7, "Assets/moon.jpg"), 27, 0.0739219712525667, earth, 38);
-		io = new AstronomicalBody(StdDraw3D.sphere(0.002812*AU + 90, 0, 0, 1.8, "Assets/io.jpg"), 2, 0.00479, jupiter);
+		io = new AstronomicalBody(StdDraw3D.sphere(0.002812*AU + 90, 0, 0, 1.8, "Assets/io.jpg"), 1.77, 0.00479, jupiter);
 		europa = new AstronomicalBody(StdDraw3D.sphere(0.004474*AU +100, 0, 0, 1.56, "Assets/europa.jpg"), 3.55, 0.00972, jupiter);
 		ganymede = new AstronomicalBody(StdDraw3D.sphere(0.007136*AU +110, 0, 0, 2.6, "Assets/ganymede.jpg"), 7.15, 0.01958, jupiter);
 		callisto = new AstronomicalBody(StdDraw3D.sphere(0.01255*AU + 120, 0, 0, 2.4, "Assets/callisto.jpg"), 16.7, 0.045722, jupiter);

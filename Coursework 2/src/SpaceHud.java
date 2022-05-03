@@ -3,7 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * A HUD to use in a Solar System graphic, with a centre reticle,
+ * A HUD to use in a Solar System graphic, with a centre reticule,
  * a time-stamp and a speed indicator.
  * 
  * @author Jack Smith - 24265241
